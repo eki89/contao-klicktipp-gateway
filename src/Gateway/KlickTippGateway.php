@@ -36,6 +36,7 @@ class KlickTippGateway extends \NotificationCenter\Gateway\Base implements Gatew
                 case 'subscribe': return $this->subscribe($message, $tokens); break;
                 case 'subscriber_update': return $this->subscriberUpdate($message, $tokens); break;
                 case 'tag': return $this->tag($message, $tokens); break;
+                case 'untag': return $this->untag($message, $tokens); break;
                 default: throw new KlickTippGatewayException('Action "'.$message->kt_action.'" is currently not implemented.');
             }
         } catch (KlickTippGatewayException $e) {
@@ -114,6 +115,28 @@ class KlickTippGateway extends \NotificationCenter\Gateway\Base implements Gatew
         System::log('Tagging Klick-Tipp subscriber "'.$email.'" with tag ID "'.$tagId.'"', __METHOD__, TL_GENERAL);
         $kt = $this->getConnector();
         $kt->tag($email, $tagId);
+        $this->checkError($kt);
+
+        return true;
+    }
+
+    protected function untag(Message $message, array $tokens): bool
+    {
+        $email = \Haste\Util\StringUtil::recursiveReplaceTokensAndTags($message->kt_email, $tokens);
+
+        if (empty($email) || !Validator::isEmail($email)) {
+            throw new KlickTippGatewayException('Invalid email address given.');
+        }
+
+        $tagId = $this->getTagId($message, $tokens);
+
+        if (empty($tagId)) {
+            throw new KlickTippGatewayException('No tag given.');
+        }
+
+        System::log('Remove tag ID "'.$tagId.'" of Klick-Tipp subscriber "'.$email.'"', __METHOD__, TL_GENERAL);
+        $kt = $this->getConnector();
+        $kt->untag($email, $tagId);
         $this->checkError($kt);
 
         return true;

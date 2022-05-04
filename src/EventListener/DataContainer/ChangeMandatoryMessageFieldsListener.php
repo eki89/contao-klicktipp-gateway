@@ -29,7 +29,7 @@ class ChangeMandatoryMessageFieldsListener
             return;
         }
 
-        if ('tag' === $message->kt_action) {
+        if ('tag' === $message->kt_action || 'untag' === $message->kt_action) {
             $GLOBALS['TL_DCA']['tl_nc_message']['fields']['kt_tag']['eval']['mandatory'] = true;
         }
     }

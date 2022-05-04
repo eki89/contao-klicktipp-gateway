@@ -18,6 +18,7 @@ $GLOBALS['TL_DCA']['tl_nc_message']['fields']['kt_action'] = [
         'subscribe',
         'subscriber_update',
         'tag',
+        'untag',
     ],
     'sql' => ['type' => 'string', 'length' => 64, 'default' => ''],
 ];
@@ -55,3 +56,4 @@ $GLOBALS['TL_DCA']['tl_nc_message']['palettes']['klicktipp'] = '{title_legend},t
 $GLOBALS['TL_DCA']['tl_nc_message']['subpalettes']['kt_action_subscribe'] = 'kt_email,kt_list_id,kt_tag,kt_parameters';
 $GLOBALS['TL_DCA']['tl_nc_message']['subpalettes']['kt_action_subscriber_update'] = 'kt_email,kt_parameters';
 $GLOBALS['TL_DCA']['tl_nc_message']['subpalettes']['kt_action_tag'] = 'kt_email,kt_tag';
+$GLOBALS['TL_DCA']['tl_nc_message']['subpalettes']['kt_action_untag'] = 'kt_email,kt_tag';
